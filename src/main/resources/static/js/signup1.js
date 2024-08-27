@@ -35,12 +35,12 @@ let isUidChecked = false;
             const email = document.getElementById('email').value;
 
 
-            if (uid.length < 3 || uid.length > 20) {
+            if (uid.length < 1 || uid.length > 20) {
                 alert('아이디는 3자 이상 20자 이하이어야 합니다.');
                 return false;
             }
 
-            if (password.length < 8 || uid.length > 20) {
+            if (password.length < 1 || uid.length > 20) {
                 alert('비밀번호는 8자 이상 20자 이하이어야 합니다.');
                 return false;
             }

@@ -62,7 +62,7 @@ public class User implements UserDetails {
     private boolean locservice;
 
     @Column(name = "term_use")
-    private boolean term_use;
+    private boolean termuse;
 
     @Column(name = "personalinfo")
     private boolean personalinfo;
@@ -72,24 +72,25 @@ public class User implements UserDetails {
     private int jellypoint;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "reg_date", nullable = false, updatable = false)
+    @Column(name = "regdate", nullable = false, updatable = false)
     @CreatedDate
     private Date regDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "withdrawal_date")
-    private Date withdrawal_date;
+    @Column(name = "withdrawaldate")
+    private Date withdrawaldate;
 
     @OneToMany(mappedBy = "user")
     private Set<StoryLike> likes;
 
-
+    @OneToMany(mappedBy = "user")
+    private Set<GamePoints> gamePoints;
 
 
 
     @Builder
     public User(String uid, String nickname, String email, String password, String name, String dogname, String dogbreed, String profilePhoto, Date dogbirthday,
-                String dogmeeting , boolean marketsns, boolean locservice, boolean term_use,boolean personalinfo, int jellypoint) {
+                String dogmeeting , boolean marketsns, boolean locservice, boolean termuse,boolean personalinfo, int jellypoint) {
         this.uid = uid;
         this.nickname = nickname;
         this.email = email;
@@ -102,7 +103,7 @@ public class User implements UserDetails {
         this.dogmeeting = dogmeeting;
         this.marketsns = marketsns;
         this.locservice = locservice;
-        this.term_use = term_use;
+        this.termuse = termuse;
         this.jellypoint = jellypoint;
         this.personalinfo = personalinfo;
         this.regDate = new Date();

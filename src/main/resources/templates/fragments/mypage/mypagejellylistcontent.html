@@ -4,7 +4,7 @@
             <img th:src="@{/image/mypage/rcp.jfif}" class="jelly_image">
             <div class="jelly_left">
                 <div class="jelly_text">'가위바위보'하고~</div>
-                <a href="#" class="jelly_link">젤리 하나 <span> 받기 > </span></a>
+                <a href="/game_list/rsp" class="jelly_link">젤리 하나 <span> 받기 > </span></a>
             </div>
             <div class="jelly_right">
                 <div class="progress-circle" data-progress="0"></div>
@@ -15,7 +15,7 @@
             <img th:src="@{/image/mypage/tictaktok.png}" class="jelly_image">
             <div class="jelly_left">
                 <div class="jelly_text">'tic-tak-tok'하고~</div>
-                <a href="#" class="jelly_link">젤리 하나 <span> 받기 > </span></a>
+                <a href="/game_list/tic" class="jelly_link">젤리 하나 <span> 받기 > </span></a>
             </div>
             <div class="jelly_right">
                 <div class="progress-circle" data-progress="0"></div>
@@ -26,7 +26,7 @@
             <img th:src="@{/image/mypage/rullet.jfif}" class="jelly_image">
             <div class="jelly_left">
                 <div class="jelly_text">'룰렛'돌리고~</div>
-                <a href="#" class="jelly_link">젤리 하나 <span> 받기 > </span></a>
+                <a href="/game_list/rollet" class="jelly_link">젤리 하나 <span> 받기 > </span></a>
             </div>
             <div class="jelly_right">
                 <div class="progress-circle" data-progress="0"></div>
@@ -36,12 +36,12 @@
 
     <div class="get_jelly_list">
         <h3 class="order-massage">받은 젤리 내역</h3>
-                <div class="jellyinfo">
-                    <ul >
-                        <li>획득내역 : 가위 바위 보 게임 승리</li>
-                        <li>  획득일자 : 2024-08-27  </li>
-                    </ul>
-                    <a>+5</a>
-                </div>
+        <div class="jellyinfo" th:each="gamepoints : ${gamePoints}">
+            <ul >
+                <li th:text="${gamepoints.gameType}"></li>
+                <li  th:text="${gamepoints.timePlayed}"></li>
+            </ul>
+            <a th:text="'+'+${gamepoints.point}"></a>
+        </div>
     </div>
 </div>

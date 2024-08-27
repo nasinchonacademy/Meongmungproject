@@ -12,12 +12,10 @@ import org.zerock.projectmeongmung.dto.MeongStoryDTO;
 import org.zerock.projectmeongmung.dto.PageRequestDTO;
 import org.zerock.projectmeongmung.dto.PageResultDTO;
 import org.zerock.projectmeongmung.entity.MeongStory;
-import org.zerock.projectmeongmung.entity.QMeongStory;
 import org.zerock.projectmeongmung.entity.User;
 import org.zerock.projectmeongmung.repository.MeongStoryRepository;
 import org.zerock.projectmeongmung.repository.UserRepository;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -29,94 +27,87 @@ public class MeongStoryServiceImpl implements MeongStoryService {
     private final UserRepository userRepository;
 
     @Override
-    public long register(MeongStoryDTO dto) {  // 반환 타입을 long으로 변경
-        log.info("DTO: " + dto);
-
+    public Long register(MeongStoryDTO dto) {
         // `uid`로 `User` 객체를 조회
         User user = userRepository.findByUid(dto.getUid())
                 .orElseThrow(() -> new IllegalArgumentException("User not found with uid: " + dto.getUid()));
 
-        // `dtoToEntity` 메서드를 사용하여 `MeongStory` 객체 생성
+        // DTO -> Entity 변환
         MeongStory entity = dtoToEntity(dto, user);
 
-        log.info("Entity: " + entity);
-
+        // 저장
         meongStoryRepository.save(entity);
 
-        return entity.getSeq();  // `long` 타입으로 반환
+        // Entity의 seq 반환
+        return entity.getSeq();
     }
 
     @Override
     public PageResultDTO<MeongStoryDTO, MeongStory> getList(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("seq").descending());
-
-        BooleanBuilder booleanBuilder = getSearch(requestDTO);
-
-        Page<MeongStory> result = meongStoryRepository.findAll(booleanBuilder, pageable);
-
+        Page<MeongStory> result = meongStoryRepository.findAll(pageable);
         Function<MeongStory, MeongStoryDTO> fn = this::entityToDto;
-
         return new PageResultDTO<>(result, fn);
     }
 
     @Override
-    public MeongStoryDTO read(long seq) {  // 파라미터 타입을 long으로 변경
-        Optional<MeongStory> result = meongStoryRepository.findById(seq);
+    public PageResultDTO<MeongStoryDTO, MeongStory> getList(PageRequestDTO requestDTO, String current) {
+        return null;
+    }
 
-        return result.map(this::entityToDto).orElse(null);
+
+    @Override
+    public MeongStoryDTO read(Long seq) {
+        return meongStoryRepository.findById(seq).map(this::entityToDto).orElse(null);
     }
 
     @Override
     public void modify(MeongStoryDTO dto) {
-        Optional<MeongStory> result = meongStoryRepository.findById(dto.getSeq());
+        MeongStory entity = meongStoryRepository.findById(dto.getSeq())
+                .orElseThrow(() -> new IllegalArgumentException("Story not found with seq: " + dto.getSeq()));
 
-        if (result.isPresent()) {
-            MeongStory entity = result.get();
-            entity.setTitle(dto.getTitle());
-            entity.setContent(dto.getContent());
-            entity.setLikecount(dto.getLikecount());
-            entity.setPicture(dto.getPicture());
-            entity.setCount(dto.getView_count());
-            entity.setCategory(dto.getCategory());
+        entity.setTitle(dto.getTitle());
+        entity.setContent(dto.getContent());
+        entity.setLikecount(dto.getLikecount());
+        entity.setPicture(dto.getPicture());
+        entity.setViewcount(dto.getViewcount());
+        entity.setCategory(dto.getCategory());
 
-            meongStoryRepository.save(entity);
-        }
+        meongStoryRepository.save(entity);
     }
 
     @Override
-    public void remove(long seq) {  // 파라미터 타입을 long으로 변경
+    public void remove(Long seq) {
         meongStoryRepository.deleteById(seq);
     }
 
-    private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
-        String type = requestDTO.getType();
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
+    @Override
+    public MeongStory dtoToEntity(MeongStoryDTO dto, User user) {
+        return MeongStory.builder()
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .likecount(dto.getLikecount())
+                .picture(dto.getPicture())
+                .viewcount(dto.getViewcount())
+                .category(dto.getCategory())
+                .user(user)
+                .build();
+    }
 
-        QMeongStory qMeongStory = QMeongStory.meongStory;
-
-        String keyword = requestDTO.getKeyword();
-
-        BooleanExpression expression = qMeongStory.seq.gt(0L); // `long` 타입에 맞게 수정
-        booleanBuilder.and(expression);
-
-        if (type == null || type.trim().isEmpty()) {
-            return booleanBuilder;
-        }
-
-        BooleanBuilder conditionBuilder = new BooleanBuilder();
-
-        if (type.contains("t")) {
-            conditionBuilder.or(qMeongStory.title.contains(keyword));
-        }
-        if (type.contains("c")) {
-            conditionBuilder.or(qMeongStory.content.contains(keyword));
-        }
-        if (type.contains("u")) {
-            conditionBuilder.or(qMeongStory.user.uid.contains(keyword));
-        }
-
-        booleanBuilder.and(conditionBuilder);
-
-        return booleanBuilder;
+    @Override
+    public MeongStoryDTO entityToDto(MeongStory entity) {
+        return MeongStoryDTO.builder()
+                .seq(entity.getSeq())
+                .title(entity.getTitle())
+                .content(entity.getContent())
+                .likecount(entity.getLikecount())
+                .picture(entity.getPicture())
+                .viewcount(entity.getViewcount())
+                .category(entity.getCategory())
+                .regdate(entity.getRegdate())
+                .modified(entity.getModified())
+                .deleted(entity.getDeleted())
+                .uid(entity.getUser().getUid())
+                .build();
     }
 }

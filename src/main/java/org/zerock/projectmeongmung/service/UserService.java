@@ -26,7 +26,7 @@ public class UserService {
                 .dogname(dto.getDogname())
                 .dogbreed(dto.getDogbreed())
                 .dogmeeting(dto.getDogmeeting())
-                .term_use(dto.isTerm_use())
+                .termuse(dto.isTermuse())
                 .locservice(dto.isLocservice())
                 .marketsns(dto.isMarketsns())
                 .personalinfo(dto.isPersonalinfo())
