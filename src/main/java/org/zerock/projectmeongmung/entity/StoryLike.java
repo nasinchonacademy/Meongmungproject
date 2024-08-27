@@ -3,8 +3,6 @@ package org.zerock.projectmeongmung.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.lang.reflect.Member;
-
 @Entity
 @Table(name = "StoryLikecount")
 @Data
@@ -16,19 +14,19 @@ public class StoryLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "story_likecountid", updatable = false)
+    @Column(name = "storylikecountid", updatable = false)
     private Long story_likecountid;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "memberid", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "story_seq", nullable = false)
-    private MungStory storySeq;
+    @JoinColumn(name = "storyseq", nullable = false)
+    private MeongStory storySeq;
 
     // storySeq 필드에 대한 Getter 메서드
-    public MungStory getStorySeq() {
+    public MeongStory getStorySeq() {
         return storySeq;
     }
 

@@ -31,7 +31,7 @@
     }
 
     h5 {
-        margin-bottom: 20px;
+        margin-bottom: 40px;
         text-align: center;
     }
 
@@ -42,6 +42,24 @@
     .point {
         text-align: center;
     }
+
+    .allButton {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    button {
+        padding: 10px;
+        border-radius: 7px;
+        border: 1px solid #ffffff;
+        margin: 5px;
+        width: 190px;
+    }
+
+    .order-massage {
+        margin-top: 40px;
+    }
+
 </style>
 <script>
 
@@ -54,7 +72,7 @@
 <th:block th:replace="fragments/nav :: navMenu"></th:block>
 
 <!-- 메인 컨텐츠 영역 -->
-<h5>주문이 완료되었습니다</h5>
+<h5 class="order-massage">주문이 완료되었습니다</h5>
 <div class="container">
     <h5>배송 정보</h5>
     <div>
@@ -75,9 +93,11 @@
     </div>
 </div>
 
-<a th:href="@{/meongmung}"><button class="cart-button" id="cartButton">HOME</button></a>
-<a th:href="@{/get_order_list}"><button class="buy-button" id="buyButton">주문내역 확인하기</button></a>
-<a th:href="@{/productMain}"><button class="cart-button" id="cartButton">계속 쇼핑하기</button></a>
+<div class="allButton">
+    <a th:href="@{/meongmung}"><button class="home-button" id="homeButton">HOME</button></a>
+    <a th:href="@{/get_order_list}"><button class="buy-button" id="buyButton">주문내역 확인하기</button></a>
+    <a th:href="@{/productMain}"><button class="cart-button" id="cartButton">계속 쇼핑하기</button></a>
+</div>
 
 <!-- 푸터 영역 -->
 <th:block th:replace="fragments/nav :: footer"></th:block>

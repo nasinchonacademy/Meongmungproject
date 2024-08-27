@@ -49,3 +49,26 @@ public class MungStoryController {
         return "fragments/mungStory/mainContent :: content";  // Thymeleaf fragment를 반환
     }
 }
+
+
+
+// 예를 들어, Service를 통해 DB에서 데이터를 가져오는 예시
+/*
+switch (current) {
+        case "1":
+// "전체"에 해당하는 데이터 불러오기
+dataList = myService.getAllItems(); // DB에서 모든 항목을 가져옴
+        break;
+                case "2":
+// "애견 동반 장소"에 해당하는 데이터 불러오기
+dataList = myService.getPetFriendlyLocations(); // DB에서 애견 동반 장소를 가져옴
+        break;
+                case "3":
+// "일상"에 해당하는 데이터 불러오기
+dataList = myService.getDailyItems(); // DB에서 일상 항목을 가져옴
+        break;
+default:
+// 예외 처리 또는 빈 리스트 반환
+dataList = Collections.emptyList();
+        break;
+                }*/

@@ -18,13 +18,13 @@ $(document).ready(function() {
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const isRadio2Selected = urlParams.get('isRadio2Selected');
+    const urlParams = new URLSearchParams(window.location.search);
+    const isRadio2Selected = urlParams.get('isRadio2Selected');
 
-        if (isRadio2Selected === 'true') {
-            document.getElementById('btnradio2').checked = true;
-        } else {
-            document.getElementById('btnradio1').checked = true;
-        }
-    });
+    if (isRadio2Selected === 'true') {
+        document.getElementById('btnradio2').checked = true;
+    } else {
+        document.getElementById('btnradio1').checked = true;
+    }
+});
 

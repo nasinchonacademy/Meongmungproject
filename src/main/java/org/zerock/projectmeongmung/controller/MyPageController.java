@@ -3,14 +3,13 @@ package org.zerock.projectmeongmung.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.zerock.projectmeongmung.entity.MungStory;
+import org.zerock.projectmeongmung.entity.MeongStory;
 import org.zerock.projectmeongmung.entity.User;
 import org.zerock.projectmeongmung.service.MyPageService;
 import org.zerock.projectmeongmung.service.UserDetailService;
@@ -38,14 +37,14 @@ public class MyPageController {
         User user = userDetailService.loadUserByUsername(username);
 
         // 좋아요한 스토리 가져오기
-        List<MungStory> likedStories = myPageService.getLikedStories(user);
+        List<MeongStory> likedStories = myPageService.getLikedStories(user);
         model.addAttribute("likedStories", likedStories);
 
         // 젤리 포인트 가져오기
         int jelly = user.getJellypoint();
         model.addAttribute("jelly", jelly);
 
-        List<MungStory> writtenStories = myPageService.getWrittenStories(user);
+        List<MeongStory> writtenStories = myPageService.getWrittenStories(user);
         model.addAttribute("writtenStories", writtenStories);
 
         return "mypage/mypage";
@@ -68,7 +67,7 @@ public class MyPageController {
                                  @RequestParam("dogname") String dogname,
                                  @RequestParam("profilePhoto") MultipartFile profilePhoto,
                                  @RequestParam(value = "dogbirthday", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dogbirthday,
-                                  @RequestParam("dogbreed") String dogbreed)
+                                 @RequestParam("dogbreed") String dogbreed)
 
     {
 
@@ -110,12 +109,6 @@ public class MyPageController {
 
         // 저장된 파일의 경로 반환 (웹에서 접근 가능한 경로로 변환)
         return  fileName;
-    }
-
-    // 사용자 정보 수정 페이지를 표시하는 메서드
-    @GetMapping("/mypagejellylist")
-    public String showjellylistPage(Model model,Authentication authentication) {
-        return "mypage/mypagejellylist";
     }
 
 }

@@ -21,4 +21,9 @@ public class BuyController {
         return "shopping/payment_complete";
     }
 
+    @GetMapping("/get_order_check")
+    public String getOrderCheck(Model model){
+        return "shopping/get_order_check";
+    }
+
 }
