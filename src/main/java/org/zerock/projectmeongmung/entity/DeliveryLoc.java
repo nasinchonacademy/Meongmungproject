@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "delivery_loc")
+@Table(name = "deliveryloc")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class DeliveryLoc {
@@ -18,16 +18,16 @@ public class DeliveryLoc {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "memberid", nullable = false)
     private User user;
 
-    @Column(name = "road_addr")
+    @Column(name = "roadaddr")
     private String roadAddr;
 
-    @Column(name = "local_addr")
+    @Column(name = "localaddr")
     private String localAddr;
 
-    @Column(name = "etc_addr")
+    @Column(name = "etcaddr")
     private String etcAddr;
 
     @Builder

@@ -9,15 +9,16 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "game_points")
+@Table(name = "gamepoints")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class GamePoints {
 
-    @EmbeddedId
-    private GamePointsId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "gameseq", unique = true, nullable = false)
+    private Long gameseq;
 
-    @MapsId("userId")
     @ManyToOne
     @JoinColumn(name = "id", nullable = false)
     private User user;
@@ -25,22 +26,23 @@ public class GamePoints {
     @Column(name = "point", nullable = false)
     private int point;
 
-    @Column(name = "time_played", nullable = false)
+    @Column(name = "timeplayed", nullable = false)
     private Timestamp timePlayed;
 
-    @Column(name = "rest_count", nullable = false)
+    @Column(name = "restcount", nullable = false)
     private int restCount;
 
+    @Column(name = "gameType", nullable= false)
+    private String gameType;
+
     @Builder
-    public GamePoints(User user, GameType gameType, int point, Timestamp timePlayed, int restCount) {
-        this.id = new GamePointsId(user.getId(), gameType);
+    public GamePoints(Long gameseq ,User user, String gameType, int point, Timestamp timePlayed, int restCount) {
+        this.gameseq = gameseq;
         this.user = user;
         this.point = point;
         this.timePlayed = timePlayed;
         this.restCount = restCount;
+        this.gameType = gameType;
     }
 
-    public enum GameType {
-        RSP, TIK, ROULETTE
-    }
 }

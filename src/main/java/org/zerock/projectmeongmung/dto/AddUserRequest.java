@@ -25,7 +25,7 @@ public class AddUserRequest {
     private String dogmeeting;
     private boolean marketsns;
     private boolean locservice;
-    private boolean term_use;
+    private boolean termuse;
     private boolean personalinfo;
     private int jellypoint;
 }

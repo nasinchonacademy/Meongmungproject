@@ -15,7 +15,7 @@ public class MeongStory extends BaseEntity1 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seq", updatable = false)
-    private int seq;
+    private Long seq;
 
     @Column(name = "title", nullable = false, length = 40)
     private String title;
@@ -28,16 +28,16 @@ public class MeongStory extends BaseEntity1 {
 
     @Lob
     @Column(name = "picture")
-    private byte[] picture;
+    private String picture;
 
     @Column(name = "viewcount", nullable = false)
-    private int count;
+    private int viewcount;
 
     @Column(name = "category", nullable = false, length = 40)
     private String category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uid", nullable = false)
+    @JoinColumn(name = "memberid", nullable = false)
     private User user;
 
     // StoryLike 엔티티와의 관계 설정
@@ -45,13 +45,13 @@ public class MeongStory extends BaseEntity1 {
     private Set<StoryLike> likes;
 
     @Builder
-    public MeongStory(String title, String content, int likecount, byte[] picture,
-                      int view_count, String category, User user) {
+    public MeongStory(String title, String content, int likecount, String picture,
+                      int viewcount, String category, User user) {
         this.title = title;
         this.content = content;
         this.likecount = likecount;
         this.picture = picture;
-        this.count = view_count;
+        this.viewcount = viewcount;
         this.category = category;
         this.user = user;
     }
@@ -63,7 +63,7 @@ public class MeongStory extends BaseEntity1 {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", likecount=" + likecount +
-                ", count=" + count +
+                ", count=" + viewcount +
                 ", category='" + category + '\'' +
                 ", regdate=" + getRegdate() +
                 ", modified=" + getModified() +

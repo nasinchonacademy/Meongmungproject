@@ -7,16 +7,12 @@ import org.zerock.projectmeongmung.entity.MeongStory;
 import org.zerock.projectmeongmung.entity.User;
 
 public interface MeongStoryService {
-
-    long register(MeongStoryDTO dto);
-
+    Long register(MeongStoryDTO dto);
     PageResultDTO<MeongStoryDTO, MeongStory> getList(PageRequestDTO requestDTO);
-
-    MeongStoryDTO read(long seq);
-
+    PageResultDTO<MeongStoryDTO, MeongStory> getList(PageRequestDTO requestDTO, String current);
+    MeongStoryDTO read(Long seq);
     void modify(MeongStoryDTO dto);
-
-    void remove(long seq);
+    void remove(Long seq);
 
     // DTO -> Entity
     default MeongStory dtoToEntity(MeongStoryDTO dto, User user) {
@@ -25,7 +21,7 @@ public interface MeongStoryService {
                 .content(dto.getContent())
                 .likecount(dto.getLikecount())
                 .picture(dto.getPicture())
-                .view_count(dto.getView_count())
+                .viewcount(dto.getViewcount())
                 .category(dto.getCategory())
                 .user(user)
                 .build();
@@ -39,7 +35,7 @@ public interface MeongStoryService {
                 .content(entity.getContent())
                 .likecount(entity.getLikecount())
                 .picture(entity.getPicture())
-                .view_count(entity.getCount())
+                .viewcount(entity.getViewcount())
                 .category(entity.getCategory())
                 .regdate(entity.getRegdate())
                 .modified(entity.getModified())

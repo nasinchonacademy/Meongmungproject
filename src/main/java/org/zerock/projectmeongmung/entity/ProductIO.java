@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "product_io")
+@Table(name = "productio")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ProductIO {
