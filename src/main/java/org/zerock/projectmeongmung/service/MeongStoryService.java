@@ -9,17 +9,40 @@ import org.zerock.projectmeongmung.entity.User;
 public interface MeongStoryService {
     Long register(MeongStoryDTO dto);
     PageResultDTO<MeongStoryDTO, MeongStory> getList(PageRequestDTO requestDTO);
-    PageResultDTO<MeongStoryDTO, MeongStory> getPetFriendlyLocations(PageRequestDTO requestDTO);
-    PageResultDTO<MeongStoryDTO, MeongStory> getDailyItems(PageRequestDTO requestDTO);
+    PageResultDTO<MeongStoryDTO, MeongStory> getList(PageRequestDTO requestDTO, String current);
     MeongStoryDTO read(Long seq);
     void modify(MeongStoryDTO dto);
     void remove(Long seq);
-    PageResultDTO<MeongStoryDTO, MeongStory> getAllItems(PageRequestDTO requestDTO);
 
     // DTO -> Entity
-    MeongStory dtoToEntity(MeongStoryDTO dto);
-    MeongStory dtoToEntity(MeongStoryDTO dto, User user); // 추가된 메서드
+    default MeongStory dtoToEntity(MeongStoryDTO dto, User user) {
+        return MeongStory.builder()
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .likecount(dto.getLikecount())
+                .picture(dto.getPicture())
+                .viewcount(dto.getViewcount())
+                .category(dto.getCategory())
+                .commentcount(dto.getCommentcount())
+                .user(user)
+                .build();
+    }
 
     // Entity -> DTO
-    MeongStoryDTO entityToDto(MeongStory entity);
+    default MeongStoryDTO entityToDto(MeongStory entity) {
+        return MeongStoryDTO.builder()
+                .seq(entity.getSeq())
+                .title(entity.getTitle())
+                .content(entity.getContent())
+                .likecount(entity.getLikecount())
+                .picture(entity.getPicture())
+                .viewcount(entity.getViewcount())
+                .category(entity.getCategory())
+                .regdate(entity.getRegdate())
+                .commentcount(entity.getCommentcount())
+                .modified(entity.getModified())
+                .deleted(entity.getDeleted())
+                .uid(entity.getUser().getUid())
+                .build();
+    }
 }

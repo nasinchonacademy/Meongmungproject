@@ -34,16 +34,16 @@ public class ProductIO {
     @Column(name = "status")
     private Status status;
 
-    @Column(name = "pDate")
-    private Timestamp pDate;
+    @Column(name = "pdate")
+    private Timestamp pdate;
 
     @Builder
-    public ProductIO(Product product, Buy buy, int amount, Status status, Timestamp pDate) {
+    public ProductIO(Product product, Buy buy, int amount, Status status, Timestamp pdate) {
         this.product = product;
         this.buy = buy;
         this.amount = amount;
         this.status = status;
-        this.pDate = pDate;
+        this.pdate = pdate;
     }
 
     public enum Status {

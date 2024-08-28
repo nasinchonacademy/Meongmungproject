@@ -20,19 +20,19 @@ public class Buy {
     private Long orderno;
 
     @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "memberid", nullable = false)
     private User user;
 
-    @Column(name = "res_name", nullable = false)
+    @Column(name = "resname", nullable = false)
     private String resName;
 
-    @Column(name = "res_address", nullable = false)
+    @Column(name = "resaddress", nullable = false)
     private String resAddress;
 
-    @Column(name = "res_phone", nullable = false)
+    @Column(name = "resphone", nullable = false)
     private String resPhone;
 
-    @Column(name = "res_requirement")
+    @Column(name = "resrequirement")
     private String resRequirement;
 
     @Column(name = "totalprice", nullable = false)

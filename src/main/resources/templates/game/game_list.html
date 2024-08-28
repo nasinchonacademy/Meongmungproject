@@ -61,11 +61,9 @@
         position: absolute;
         width: 220px;
         height: 310px;
-        background: linear-gradient(105deg,
-        transparent 40%,
+        background: linear-gradient(105deg, transparent 40%,
         rgba(255, 219, 112, 0.8) 45%,
-        rgba(132, 50, 255 ,0.6) 50%,
-        transparent 54%);
+        rgba(132, 50, 255 ,0.6) 50%, transparent 54%);
         filter: brightness(1.1) opacity(0.8);
         mix-blend-mode: color-dodge;
         background-size: 150% 150%;
@@ -123,24 +121,21 @@
     <a th:href="@{/game_list/rollet}" class="game-card">
         <div class="container">
             <div class="overlay"></div>
-            <div class="card" style="background-image: url('/image/game/roulettImage.png');"></div>
-            <span>룰렛 돌리기</span>
+            <div class="card" style="background-image: url('/image/game/roulettcard.png');"></div>
         </div>
     </a>
 
     <a th:href="@{/game_list/rsp}" class="game-card">
         <div class="container">
             <div class="overlay"></div>
-            <div class="card" style="background-image: url('/image/game/rpsImage.png');"></div>
-            <span>가위바위보</span>
+            <div class="card" style="background-image: url('/image/game/rpscard.png');"></div>
         </div>
     </a>
 
     <a th:href="@{/game_list/tic}" class="game-card">
         <div class="container">
             <div class="overlay"></div>
-            <div class="card" style="background-image: url('/image/game/tttImage.png');"></div>
-            <span>틱택톡</span>
+            <div class="card" style="background-image: url('/image/game/tttcard.png');"></div>
         </div>
     </a>
 
