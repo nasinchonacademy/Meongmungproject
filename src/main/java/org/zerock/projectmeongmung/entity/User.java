@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Column(name = "uid", updatable = false, unique = true ,nullable = false)
     private String uid;
 
-    @Column(name = "nickname" ,unique = true,nullable = false)
+    @Column(name = "nickname" ,unique = true, nullable = false)
     private String nickname;
 
     @Column(name = "email",nullable = false)
@@ -46,7 +46,7 @@ public class User implements UserDetails {
     @Column(name="dogbreed")
     private String dogbreed;
 
-    @Column(name="Profile_photo")
+    @Column(name="Profilephoto")
     private String profilePhoto;
 
     @Column(name="dogbirthday")
@@ -61,7 +61,7 @@ public class User implements UserDetails {
     @Column(name = "locservice")
     private boolean locservice;
 
-    @Column(name = "term_use")
+    @Column(name = "termuse")
     private boolean termuse;
 
     @Column(name = "personalinfo")

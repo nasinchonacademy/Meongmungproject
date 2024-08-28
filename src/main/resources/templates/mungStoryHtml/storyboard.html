@@ -29,7 +29,7 @@
 <!-- 메인 컨텐츠 영역 -->
 <div id="main-content">
     <!-- 초기 로드될 첫 번째 섹션만 표시 -->
-    <th:block th:replace="fragments/mungStory/mainContent :: content(dataList=${dataList})"></th:block>
+    <th:block th:replace="fragments/mungStory/mainContent :: content(dataList=${result.dtoList})"></th:block>
 </div>
 
 <!-- 푸터 영역 -->
@@ -39,6 +39,7 @@
     $(document).ready(function() {
         $('input[name="btnradio"]').on('change', function() {
             var selectedValue = $(this).attr('id').replace('btnradio', '');
+            var currentPage = 1;  // 초기 페이지 번호 설정
 
             // 모든 라디오 버튼의 라벨에서 'active' 클래스를 제거
             $('label.btn').removeClass('active');
@@ -47,7 +48,18 @@
             $('label[for="btnradio' + selectedValue + '"]').addClass('active');
 
             // AJAX 요청을 통해 새로운 콘텐츠 로드
-            $.get('/mungstory/mungstoryAll', { current: selectedValue }, function(data) {
+            $.get('/mungstory/mungstoryAll', { current: selectedValue, page: currentPage }, function(data) {
+                $('#main-content').html(data);
+            });
+        });
+
+        // 페이지 네비게이션 버튼 클릭 시 처리
+        $(document).on('click', '.pagination a', function(e) {
+            e.preventDefault();
+            var selectedValue = $('input[name="btnradio"]:checked').attr('id').replace('btnradio', '');
+            var page = $(this).data('page');
+
+            $.get('/mungstory/mungstoryAll', { current: selectedValue, page: page }, function(data) {
                 $('#main-content').html(data);
             });
         });

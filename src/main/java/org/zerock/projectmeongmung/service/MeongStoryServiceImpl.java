@@ -1,7 +1,5 @@
 package org.zerock.projectmeongmung.service;
 
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -28,17 +26,12 @@ public class MeongStoryServiceImpl implements MeongStoryService {
 
     @Override
     public Long register(MeongStoryDTO dto) {
-        // `uid`로 `User` 객체를 조회
         User user = userRepository.findByUid(dto.getUid())
                 .orElseThrow(() -> new IllegalArgumentException("User not found with uid: " + dto.getUid()));
 
-        // DTO -> Entity 변환
         MeongStory entity = dtoToEntity(dto, user);
-
-        // 저장
         meongStoryRepository.save(entity);
 
-        // Entity의 seq 반환
         return entity.getSeq();
     }
 
@@ -51,10 +44,20 @@ public class MeongStoryServiceImpl implements MeongStoryService {
     }
 
     @Override
-    public PageResultDTO<MeongStoryDTO, MeongStory> getList(PageRequestDTO requestDTO, String current) {
-        return null;
+    public PageResultDTO<MeongStoryDTO, MeongStory> getPetFriendlyLocations(PageRequestDTO requestDTO) {
+        Pageable pageable = requestDTO.getPageable(Sort.by("seq").descending());
+        Page<MeongStory> result = meongStoryRepository.findByCategory("Category1", pageable);
+        Function<MeongStory, MeongStoryDTO> fn = this::entityToDto;
+        return new PageResultDTO<>(result, fn);
     }
 
+    @Override
+    public PageResultDTO<MeongStoryDTO, MeongStory> getDailyItems(PageRequestDTO requestDTO) {
+        Pageable pageable = requestDTO.getPageable(Sort.by("seq").descending());
+        Page<MeongStory> result = meongStoryRepository.findByCategory("Category2", pageable);
+        Function<MeongStory, MeongStoryDTO> fn = this::entityToDto;
+        return new PageResultDTO<>(result, fn);
+    }
 
     @Override
     public MeongStoryDTO read(Long seq) {
@@ -81,17 +84,46 @@ public class MeongStoryServiceImpl implements MeongStoryService {
         meongStoryRepository.deleteById(seq);
     }
 
+    // 추가된 메서드
     @Override
-    public MeongStory dtoToEntity(MeongStoryDTO dto, User user) {
+    public MeongStory dtoToEntity(MeongStoryDTO dto) {
+        User user = userRepository.findByUid(dto.getUid())
+                .orElseThrow(() -> new IllegalArgumentException("User not found with uid: " + dto.getUid()));
+
         return MeongStory.builder()
+                .seq(dto.getSeq())
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .likecount(dto.getLikecount())
                 .picture(dto.getPicture())
                 .viewcount(dto.getViewcount())
                 .category(dto.getCategory())
+                .deleted(dto.getDeleted())
                 .user(user)
                 .build();
+    }
+
+    @Override
+    public MeongStory dtoToEntity(MeongStoryDTO dto, User user) {
+        return MeongStory.builder()
+                .seq(dto.getSeq())
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .likecount(dto.getLikecount())
+                .picture(dto.getPicture())
+                .viewcount(dto.getViewcount())
+                .category(dto.getCategory())
+                .deleted(dto.getDeleted())
+                .user(user)
+                .build();
+    }
+
+    @Override
+    public PageResultDTO<MeongStoryDTO, MeongStory> getAllItems(PageRequestDTO requestDTO) {
+        Pageable pageable = requestDTO.getPageable(Sort.by("seq").descending());
+        Page<MeongStory> result = meongStoryRepository.findAll(pageable);
+        Function<MeongStory, MeongStoryDTO> fn = this::entityToDto;
+        return new PageResultDTO<>(result, fn);
     }
 
     @Override
@@ -108,6 +140,7 @@ public class MeongStoryServiceImpl implements MeongStoryService {
                 .modified(entity.getModified())
                 .deleted(entity.getDeleted())
                 .uid(entity.getUser().getUid())
+                .nickname(entity.getUser().getNickname())  // User의 nickname을 DTO에 설정
                 .build();
     }
 }

@@ -2,6 +2,8 @@ package org.zerock.projectmeongmung.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -10,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class MeongStory extends BaseEntity1 {
 
     @Id
@@ -26,6 +29,12 @@ public class MeongStory extends BaseEntity1 {
     @Column(name = "likecount", nullable = false)
     private int likecount;
 
+    @Column(name = "commentcount")
+    private int commentcount;
+
+    @Column(name = "deleteddate")
+    private LocalDateTime deleted;
+
     @Lob
     @Column(name = "picture")
     private String picture;
@@ -40,34 +49,10 @@ public class MeongStory extends BaseEntity1 {
     @JoinColumn(name = "memberid", nullable = false)
     private User user;
 
-    // StoryLike 엔티티와의 관계 설정
     @OneToMany(mappedBy = "storySeq")
     private Set<StoryLike> likes;
 
-    @Builder
-    public MeongStory(String title, String content, int likecount, String picture,
-                      int viewcount, String category, User user) {
-        this.title = title;
-        this.content = content;
-        this.likecount = likecount;
-        this.picture = picture;
-        this.viewcount = viewcount;
-        this.category = category;
-        this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "MeongStory{" +
-                "seq=" + seq +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", likecount=" + likecount +
-                ", count=" + viewcount +
-                ", category='" + category + '\'' +
-                ", regdate=" + getRegdate() +
-                ", modified=" + getModified() +
-                ", deleted=" + getDeleted() +
-                '}';
+    public String getNickname() {
+        return user.getNickname();
     }
 }

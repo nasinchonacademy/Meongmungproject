@@ -13,9 +13,9 @@
     <h2>좋아요 누른 게시물</h2>
     <ul th:if="${likedStories != null}">
       <li th:each="story : ${likedStories}" class="liked_content">
-        <h3 th:text="${story.story_title}"></h3>
-        <p th:text="${story.story_content}"></p>
-        <img th:src="${story.story_picture ?: '/image/tool/profilelogo.PNG'}" >
+        <h3 th:text="${story.storytitle}"></h3>
+        <p th:text="${story.storycontent}"></p>
+        <img th:src="${story.storypicture ?: '/image/tool/profilelogo.PNG'}" >
       </li>
       <li th:if="${#lists.isEmpty(likedStories)}">좋아요 한 게시물이 없습니다.</li>
     </ul>
@@ -24,9 +24,9 @@
     <h2>내가 쓴 글</h2>
     <ul th:if="${writtenStories != null}">
       <li th:each="story : ${writtenStories}" class="written_content">
-        <h3 th:text="${story.story_title ?: '제목 없음'}">제목 없음</h3>
-        <a th:href="@{'/story/edit/' + ${story.story_seq}}">수정하기</a>
-        <a th:href="@{'/story/delete/' + ${story.story_seq}}">삭제하기</a>
+        <h3 th:text="${story.storytitle ?: '제목 없음'}">제목 없음</h3>
+        <a th:href="@{'/story/edit/' + ${story.storyseq}}">수정하기</a>
+        <a th:href="@{'/story/delete/' + ${story.storyseq}}">삭제하기</a>
       </li>
       <li th:if="${#lists.isEmpty(writtenStories)}">작성된 글이 없습니다.</li>
     </ul>

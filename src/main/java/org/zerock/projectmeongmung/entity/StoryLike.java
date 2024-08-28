@@ -15,7 +15,7 @@ public class StoryLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "storylikecountid", updatable = false)
-    private Long story_likecountid;
+    private Long storylikecountid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberid", nullable = false)

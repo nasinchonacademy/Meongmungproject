@@ -7,27 +7,27 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 public class MeongStoryDTO {
-    private Long seq; // Sequence ID
-    private Long idstory; // Story ID
-    private String title; // Story title
-    private int likecount; // Like count
-    private String content; // Story content
-    private LocalDateTime regdate; // Registration date, replacing 'timestamp'
-    private LocalDateTime modified; // Modification date, replacing 'timestamp'
-    private String picture; // Binary data for picture, replacing 'MIDEUMBLOB'
-    private int commentcount; // Comment count
-    private int viewcount; // View count
-    private LocalDateTime deleted; // Deletion date, replacing 'timestamp'
-    private String category; // Category, replacing 'varchar2'
-    private String uid; // Foreign key to user ID
+    private Long seq;
+    private Long idstory;
+    private String title;
+    private int likecount;
+    private String content;
+    private LocalDateTime regdate;
+    private LocalDateTime modified;
+    private String picture;
+    private int commentcount;
+    private int viewcount;
+    private LocalDateTime deleted;
+    private String category;
+    private String uid;
+    private String nickname;
 
-    // 추가 생성자
-    public MeongStoryDTO(Long seq, Long id_story, String title, int likecount, String content,
+    public MeongStoryDTO(Long seq, Long idstory, String title, int likecount, String content,
                          LocalDateTime regdate, LocalDateTime modified, String picture,
                          int commentcount, int viewcount, LocalDateTime deleted,
-                         String category, String uid) {
+                         String category, String uid, String nickname) {
         this.seq = seq;
-        this.idstory = id_story;
+        this.idstory = idstory;
         this.title = title;
         this.likecount = likecount;
         this.content = content;
@@ -38,26 +38,7 @@ public class MeongStoryDTO {
         this.viewcount = viewcount;
         this.deleted = deleted;
         this.category = category;
-        this.uid = uid; // Foreign key
-    }
-
-    // toString() 메서드 (디버깅용)
-    @Override
-    public String toString() {
-        return "MeongStoryDTO{" +
-                "seq=" + seq +
-                ", idstory=" + idstory +
-                ", title='" + title + '\'' +
-                ", likecount=" + likecount +
-                ", content='" + content + '\'' +
-                ", regdate=" + regdate +
-                ", modified=" + modified +
-                ", picture=" + picture +
-                ", commentcount=" + commentcount +
-                ", viewcount=" + viewcount +
-                ", deleted=" + deleted +
-                ", category='" + category + '\'' +
-                ", uid='" + uid + '\'' +
-                '}';
+        this.uid = uid;
+        this.nickname = nickname;
     }
 }
